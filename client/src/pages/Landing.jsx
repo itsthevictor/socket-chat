@@ -13,7 +13,7 @@ const Landing = () => {
         <div className="info">
           <h1>
             Oh, God. Not another <br />
-            <span>insert app type</span> with &#8249;insert stack&#8250;
+            <span>Chat App</span> with &#8249;Socket.io&#8250;
           </h1>
           <p>
             I'm baby ennui ascot wolf fixie tousled street art godard scenester

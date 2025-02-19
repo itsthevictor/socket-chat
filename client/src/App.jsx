@@ -5,6 +5,7 @@ import { action as loginAction } from "./pages/Login";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Chat from "./pages/Chat";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
         action: loginAction,
       },
     ],
+  },
+  {
+    path: "chat",
+    element: <Chat />,
+    errorElement: <Error />,
   },
 ]);
 

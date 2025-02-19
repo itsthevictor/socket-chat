@@ -20,7 +20,7 @@ export const action = async ({ request }) => {
   try {
     await customFetch.post("/auth/login", data);
 
-    return redirect("/target-page");
+    return redirect("/chat");
   } catch (error) {
     console.log(error);
     return error;
@@ -38,7 +38,7 @@ const Login = () => {
     try {
       await customFetch.post("/auth/login", data);
 
-      navigate("/target-page");
+      navigate("/chat");
     } catch (error) {
       console.log(error);
     }
