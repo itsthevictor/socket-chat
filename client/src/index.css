@@ -1,4 +1,7 @@
 /* ============= GLOBAL CSS =============== */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 *,
 ::after,
@@ -14,27 +17,41 @@ html {
 
 :root {
   /* colors */
-  --primary-50: #e0fcff;
-  --primary-100: #bef8fd;
-  --primary-200: #87eaf2;
-  --primary-300: #54d1db;
-  --primary-400: #38bec9;
-  --primary-500: #2cb1bc;
-  --primary-600: #14919b;
-  --primary-700: #0e7c86;
-  --primary-800: #0a6c74;
-  --primary-900: #044e54;
+  --primary-0: #ffffff;
+  --primary-5: #ffebe0;
+  --primary-10: #ffd7c2;
+  --primary-15: #ffc3a4;
+  --primary-20: #ffaf87;
+  --primary-25: #ff9b6a;
+  --primary-30: #ff854e;
+  --primary-35: #ff6f30;
+  --primary-40: #fb5607;
+  --primary-45: #d94c0c;
+  --primary-50: #b7430f;
+  --primary-55: #973910;
+  --primary-60: #782f10;
+  --primary-65: #5a260f;
+  --primary-70: #3d1c0c;
+  --primary-75: #231207;
+  --primary-100: #000000;
 
-  /* --primary-50: #fff4ed;
-  --primary-100: #ffdec8;
-  --primary-200: #ffc8a4;
-  --primary-300: #ffb380;
-  --primary-400: #ffa86d;
-  --primary-500: #ff9249;
-  --primary-600: #ff8737;
-  --primary-700: #ff7c24;
-  --primary-800: #ff7112;
-  --primary-900: #ff6700; */
+  --dark-0: #ffffff;
+  --dark-5: #dfdfdf;
+  --dark-10: #c0c0c0;
+  --dark-15: #a1a1a1;
+  --dark-20: #848484;
+  --dark-25: #686868;
+  --dark-30: #4d4d4d;
+  --dark-35: #343434;
+  --dark-40: #1c1c1c;
+  --dark-45: #191919;
+  --dark-50: #171717;
+  --dark-55: #141414;
+  --dark-60: #111111;
+  --dark-65: #0e0e0e;
+  --dark-70: #090909;
+  --dark-75: #050505;
+  --dark-100: #000000;
 
   /* grey */
   --grey-50: #f8fafc;
@@ -81,7 +98,7 @@ html {
   --dark-mode-bg-secondary-color: #3f3f3f;
   --dark-mode-text-secondary-color: var(--grey-300);
 
-  --background-color: var(--grey-50);
+  --background-color: var(--dark-40);
   --text-color: var(--grey-900);
   --background-secondary-color: var(--white);
   --text-secondary-color: var(--grey-500);
@@ -192,7 +209,7 @@ ul {
 .btn {
   cursor: pointer;
   color: var(--white);
-  background: rgb(188, 98, 1);
+  background: var(--primary-55);
   border: transparent;
   border-radius: var(--border-radius);
   letter-spacing: var(--letter-spacing);
@@ -203,7 +220,7 @@ ul {
   display: inline-block;
 }
 .btn:hover {
-  background: rgb(228, 118, 0);
+  background: var(--primary-45);
   box-shadow: var(--shadow-3);
 }
 .btn-hipster {
@@ -335,7 +352,7 @@ button:disabled {
 /* BUTTONS AND BADGES */
 .pending {
   background: #fef3c7;
-  color: #f59e0b;
+  color: var(--primary-40);
 }
 
 .interview {

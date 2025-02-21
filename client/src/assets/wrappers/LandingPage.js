@@ -28,7 +28,7 @@ const Wrapper = styled.section`
     color: lightgrey;
 
     span {
-      color: rgb(228, 118, 0);
+      color: var(--primary-40);
     }
     margin-bottom: 1.5rem;
   }

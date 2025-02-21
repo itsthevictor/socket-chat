@@ -47,7 +47,8 @@ const Login = () => {
   return (
     <Wrapper>
       <Form className="form" method="post">
-        <Logo />
+        {/* <Logo /> */}
+        <h1 className="logo">Chat App</h1>
         <h4>Login</h4>
         {errors?.msg && <p style={{ color: "red" }}>{errors.msg}</p>}
 
