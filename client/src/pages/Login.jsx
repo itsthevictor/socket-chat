@@ -45,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <Wrapper>
+    <>
       <Form className="form" method="post">
         {/* <Logo /> */}
         <h1 className="logo">Chat App</h1>
@@ -65,7 +65,7 @@ const Login = () => {
           </Link>{" "}
         </p>
       </Form>
-    </Wrapper>
+    </>
   );
 };
 export default Login;

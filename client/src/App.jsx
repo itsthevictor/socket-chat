@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { HomeLayout, Landing, Register, Login, Error } from "./pages";
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
@@ -6,6 +10,11 @@ import { action as loginAction } from "./pages/Login";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Chat from "./pages/Chat";
+import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
+import { useAuth } from "./hooks/useAuth";
+import { useEffect } from "react";
+import { Loader } from "lucide-react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +50,14 @@ const router = createBrowserRouter([
         element: <Login />,
         action: loginAction,
       },
+      {
+        path: "settings",
+        element: <Settings />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
     ],
   },
   {
@@ -51,6 +68,19 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+  const { isCheckingAuth, checkAuth, user } = useAuth();
+  console.log("oi", isCheckingAuth);
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  if (isCheckingAuth && !user)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="size-10 animate-spin" />
+      </div>
+    );
+
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />

@@ -5,9 +5,9 @@ import { Logo } from "../components";
 
 const Landing = () => {
   return (
-    <Wrapper>
+    <>
       <nav>
-        <h1>Birth of the cool</h1>
+        <h1 className="text-red-500">Birth of the cool</h1>
       </nav>
       <div className="container page">
         <div className="info">
@@ -22,16 +22,16 @@ const Landing = () => {
             artisan hoodie. Tbh everyday carry listicle hot chicken, kogi
             aesthetic prism raclette snackwave ethical iPhone.
           </p>
-          <Link to="/register" className="btn register-link">
+          <Link to="/register" className="btn btn-primary">
             register
           </Link>
-          <Link to="/login" className="btn login-link">
+          <Link to="/login" className="btn btn-primary">
             login
           </Link>
         </div>
-        <img src={main} alt="job hunt" className="img main-img" />
+        {/* <img src={main} alt="job hunt" className="img main-img" /> */}
       </div>
-    </Wrapper>
+    </>
   );
 };
 
