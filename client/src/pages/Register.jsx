@@ -19,7 +19,6 @@ export const signupAction = async ({ request }) => {
   const data = Object.fromEntries(formData);
   try {
     await customFetch.post("/auth/register", data);
-
     return redirect("/login");
   } catch (error) {
     console.log(error?.response?.data?.msg);
@@ -110,7 +109,7 @@ const Register = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   className="input input-bordered w-full pl-10"
-                  name="email"
+                  name="password"
                 />
                 <button
                   type="button"

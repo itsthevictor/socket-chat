@@ -43,7 +43,7 @@ export const validateParam = withValidationErrors([
 ]);
 
 export const validateRegisterInput = withValidationErrors([
-  body("name").notEmpty().withMessage("name is required"),
+  body("firstName").notEmpty().withMessage("first name is required"),
   body("email")
     .notEmpty()
     .withMessage("email is required")
@@ -60,10 +60,9 @@ export const validateRegisterInput = withValidationErrors([
   body("password")
     .notEmpty()
     .withMessage("password is required")
-    .isLength({ min: 8 })
-    .withMessage("password must be at least 8 characters long"),
+    .isLength({ min: 6 })
+    .withMessage("password must be at least 6 characters long"),
   body("lastName").notEmpty().withMessage("last name is required"),
-  body("location").notEmpty().withMessage("location is required"),
 ]);
 
 export const validateLoginInput = withValidationErrors([
