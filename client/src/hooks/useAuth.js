@@ -11,7 +11,7 @@ export const useAuth = create((set) => ({
       const response = await mainFetch.get("/users/current-user");
       set({ user: response.data.user });
     } catch (error) {
-      console.log(error);
+      console.log("fetch current user error in hook", error);
       set({ user: null });
     } finally {
       set({ isCheckingAuth: false });

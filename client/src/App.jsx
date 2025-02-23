@@ -4,7 +4,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { HomeLayout, Landing, Register, Login, Error } from "./pages";
-import { action as registerAction } from "./pages/Register";
+import { signupAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -15,6 +15,7 @@ import Profile from "./pages/Profile";
 import { useAuth } from "./hooks/useAuth";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,12 +39,16 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Landing />,
+        element: (
+          <ProtectedRoute>
+            <Landing />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "register",
         element: <Register />,
-        action: registerAction,
+        action: signupAction,
       },
       {
         path: "login",

@@ -1,3 +1,4 @@
+import { Loader2 } from "lucide-react";
 import { useNavigation } from "react-router-dom";
 
 const SubmitBtn = ({ formBtn, onClick }) => {
@@ -6,11 +7,17 @@ const SubmitBtn = ({ formBtn, onClick }) => {
   return (
     <button
       type="submit"
-      className={`btn btn-block ${formBtn && `form-btn`}`}
+      className={`btn btn-primary w-full`}
       disabled={isSubmitting}
       onClick={onClick}
     >
-      {isSubmitting ? "Submitting..." : "Submit"}
+      {isSubmitting ? (
+        <>
+          <Loader2 className="size-5 animate-spin" /> 'Submitting...'
+        </>
+      ) : (
+        "Submit"
+      )}
     </button>
   );
 };
