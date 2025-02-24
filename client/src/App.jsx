@@ -37,38 +37,39 @@ const router = createBrowserRouter([
     element: <HomeLayout />,
     errorElement: <Error />,
     children: [
+      // {
+      //   index: true,
+      //   element: (
+      //     <ProtectedRoute>
+      //       <Landing />
+      //     </ProtectedRoute>
+      //   ),
+      // },
       {
-        index: true,
-        element: (
-          <ProtectedRoute>
-            <Landing />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "register",
+        path: "/register",
         element: <Register />,
         action: signupAction,
       },
       {
-        path: "login",
+        path: "/login",
         element: <Login />,
         action: loginAction,
       },
       {
-        path: "settings",
+        path: "/settings",
         element: <Settings />,
       },
       {
-        path: "profile",
+        path: "/profile",
         element: <Profile />,
       },
+      {
+        path: "/chat",
+        element: <Chat />,
+
+        errorElement: <Error />,
+      },
     ],
-  },
-  {
-    path: "chat",
-    element: <Chat />,
-    errorElement: <Error />,
   },
 ]);
 
