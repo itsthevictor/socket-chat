@@ -37,14 +37,14 @@ const router = createBrowserRouter([
     element: <HomeLayout />,
     errorElement: <Error />,
     children: [
-      // {
-      //   index: true,
-      //   element: (
-      //     <ProtectedRoute>
-      //       <Landing />
-      //     </ProtectedRoute>
-      //   ),
-      // },
+      {
+        index: true,
+        element: (
+          <ProtectedRoute>
+            <Landing />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "/register",
         element: <Register />,

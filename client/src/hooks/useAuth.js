@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import mainFetch from "../utils/customFetch";
-import { Navigate, redirect } from "react-router-dom";
+import { create } from 'zustand';
+import mainFetch from '../utils/customFetch';
+import { Navigate, redirect } from 'react-router-dom';
 export const useAuth = create((set) => ({
   user: null,
   isCheckingAuth: true,
@@ -9,12 +9,12 @@ export const useAuth = create((set) => ({
   isUpdatingProfile: false,
   checkAuth: async () => {
     try {
-      const response = await mainFetch.get("/users");
-      console.log("got user", response);
+      const response = await mainFetch.get('/users');
+      console.log('got user', response);
 
       set({ user: response.data.user });
     } catch (error) {
-      console.log("fetch current user error in hook", error);
+      console.log('fetch current user error in hook', error);
       set({ user: null });
     } finally {
       set({ isCheckingAuth: false });
@@ -22,11 +22,24 @@ export const useAuth = create((set) => ({
   },
   logout: async () => {
     try {
-      await mainFetch.get("/auth/logout");
-      Navigate("/login");
+      await mainFetch.get('/auth/logout');
+      Navigate('/login');
     } catch (error) {
-      console.log("log out error in hook", error);
+      console.log('log out error in hook', error);
       set({ user: null });
     }
   },
+  updateProfile: async (data) => {
+    try {
+      const res = await mainFetch.patch('/users/update-user', data, {
+        headers: {
+          'Content-type': 'multipart/form-data',
+        },
+      });
+      set({ user: res.data.user });
+    } catch (error) {
+      console.log('error');
+    }
+  },
+  isUpdatingProfile: false,
 }));
