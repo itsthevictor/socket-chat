@@ -16,6 +16,7 @@ import { useAuth } from './hooks/useAuth';
 import { useEffect } from 'react';
 import { Loader } from 'lucide-react';
 import ProtectedRoute from './pages/ProtectedRoute';
+import { useTheme } from './hooks/useTheme';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -75,10 +76,15 @@ const router = createBrowserRouter([
 
 const App = () => {
   const { isCheckingAuth, checkAuth, user } = useAuth();
+  const { theme } = useTheme();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
 
   if (isCheckingAuth && !user)
     return (
