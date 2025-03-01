@@ -40,19 +40,20 @@ export const updateUser = async (req, res) => {
 
   try {
     const { profilePic } = req.body;
-    const userId = req.user.userId;
 
     if (!profilePic) {
       throw new BadRequestError('pic is required');
     }
     const uploadRes = await cloudinary.v2.uploader.upload(profilePic);
+
     const updatedUser = await User.findByIdAndUpdate(
-      req.user.uesrId,
+      req.user.userId,
       {
-        avatar: uploadRes.recure_url,
+        avatar: uploadRes.secure_url,
       },
       { new: true }
     );
+    res.status(StatusCodes.OK).json({ updatedUser });
   } catch (error) {
     console.log('error');
   }

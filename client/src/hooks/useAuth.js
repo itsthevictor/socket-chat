@@ -10,7 +10,6 @@ export const useAuth = create((set) => ({
   checkAuth: async () => {
     try {
       const response = await mainFetch.get('/users');
-      console.log('got user', response);
 
       set({ user: response.data.user });
     } catch (error) {
@@ -31,11 +30,7 @@ export const useAuth = create((set) => ({
   },
   updateProfile: async (data) => {
     try {
-      const res = await mainFetch.patch('/users/update-user', data, {
-        headers: {
-          'Content-type': 'multipart/form-data',
-        },
-      });
+      const res = await mainFetch.put('/users/update-user', data);
       set({ user: res.data.user });
     } catch (error) {
       console.log('error');
