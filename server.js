@@ -1,31 +1,31 @@
-import morgan from "morgan";
-import express from "express";
-import "express-async-errors";
-import * as dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-import { connectDB } from "./db/connectDb.js";
+import morgan from 'morgan';
+import express from 'express';
+import 'express-async-errors';
+import * as dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import { connectDB } from './db/connectDb.js';
 
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import path from "path";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import path from 'path';
 const app = express();
 dotenv.config();
 
-import cloudinary from "cloudinary";
+import cloudinary from 'cloudinary';
 
 // routers
 
-import authRouter from "./routes/authRoutes.js";
-import userRouter from "./routes/userRoutes.js";
-import messageRouter from "./routes/messageRoutes.js";
+import authRouter from './routes/authRoutes.js';
+import userRouter from './routes/userRoutes.js';
+import messageRouter from './routes/messageRoutes.js';
 
 // middleware
-import errorHandlerMiddleware from "./middleware/errorHandler.js";
-import { authenticateUser } from "./middleware/authMiddleware.js";
+import errorHandlerMiddleware from './middleware/errorHandler.js';
+import { authenticateUser } from './middleware/authMiddleware.js';
 
 // middleware
-if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
 }
 
 cloudinary.config({
@@ -35,22 +35,22 @@ cloudinary.config({
 });
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.resolve(__dirname, "./client/dist")));
+app.use(express.static(path.resolve(__dirname, './client/dist')));
 
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", authenticateUser, userRouter);
-app.use("/api/v1/message", authenticateUser, messageRouter);
+app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', authenticateUser, userRouter);
+app.use('/api/v1/messages', authenticateUser, messageRouter);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/dist', 'index.html'));
 });
 
 // error middleware
-app.use("*", (req, res) => {
-  res.status(404).json({ message: "not found" });
+app.use('*', (req, res) => {
+  res.status(404).json({ message: 'not found' });
 });
 app.use(errorHandlerMiddleware);
 

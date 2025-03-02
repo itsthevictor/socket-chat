@@ -10,3 +10,5 @@ export { default as NoChatSelected } from './NoChatSelected';
 export { default as ChatContainer } from './ChatContainer';
 export { default as SidebarContainer } from './SidebarContainer';
 export { default as SidebarLoading } from './SidebarLoading';
+export { default as ChatHeader } from './ChatHeader';
+export { default as MessageInput } from './MessageInput';
