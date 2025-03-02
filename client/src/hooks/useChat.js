@@ -21,6 +21,7 @@ export const useChat = create((set, get) => ({
   },
 
   getMessages: async (userId) => {
+    console.log('sending message');
     set({ messagesLoading: true });
     try {
       const response = await mainFetch.get(`/messages/${userId}`);
@@ -33,4 +34,17 @@ export const useChat = create((set, get) => ({
   },
 
   setSelectedUser: (selectedUser) => set({ selectedUser }),
+
+  sendMessage: async (data) => {
+    const { selectedUser, messages } = get();
+    try {
+      const response = await mainFetch.post(
+        `/messages/${selectedUser._id}`,
+        data
+      );
+      set({ messages: [...messages, response.data.message] });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 }));

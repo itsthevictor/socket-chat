@@ -1,8 +1,8 @@
-import { StatusCodes } from "http-status-codes";
-import Message from "../models/MessageModel.js";
-import User from "../models/UserModel.js";
-import { formatImage } from "../middleware/multerMiddleware.js";
-
+import { StatusCodes } from 'http-status-codes';
+import Message from '../models/MessageModel.js';
+import User from '../models/UserModel.js';
+import { formatImage } from '../middleware/multerMiddleware.js';
+import cloudinary from 'cloudinary';
 export const getUsers = async (req, res) => {
   const users = await User.find({ _id: { $ne: req.user.userId } });
   res.status(StatusCodes.OK).json({ users });
@@ -20,14 +20,14 @@ export const getMessages = async (req, res) => {
 
 export const sendMessage = async (req, res) => {
   let messageObject;
-  if (req.file) {
-    const file = formatImage(req.file);
-    const response = await cloudinary.v2.uploader.upload(file);
+  if (req.body.image) {
+    const uploadResponse = await cloudinary.uploader.upload(req.body.image);
+
     messageObject = {
       senderId: req.user.userId,
       receiverId: req.params.id,
       text: req.body.text,
-      image: response.secure_url,
+      image: uploadResponse.secure_url,
     };
   } else {
     messageObject = {
