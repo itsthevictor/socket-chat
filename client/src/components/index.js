@@ -12,3 +12,4 @@ export { default as SidebarContainer } from './SidebarContainer';
 export { default as SidebarLoading } from './SidebarLoading';
 export { default as ChatHeader } from './ChatHeader';
 export { default as MessageInput } from './MessageInput';
+export { default as MessagesLoading } from './MessagesLoading';
