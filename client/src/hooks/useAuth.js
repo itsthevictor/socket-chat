@@ -37,4 +37,5 @@ export const useAuth = create((set) => ({
     }
   },
   isUpdatingProfile: false,
+  onlineUsers: [],
 }));

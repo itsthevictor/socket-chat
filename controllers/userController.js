@@ -18,6 +18,11 @@ export const getApplicationStats = async (req, res) => {
   res.status(StatusCodes.OK).json({ users: users });
 };
 
+export const getUsers = async (req, res) => {
+  const users = User.find();
+  res.status(StatusCodes.OK).json({ users });
+};
+
 export const updateUser = async (req, res) => {
   // console.log(req.body)
   // const newUser = { ...req.body };

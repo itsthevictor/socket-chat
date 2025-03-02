@@ -3,6 +3,7 @@ const router = Router();
 import {
   getApplicationStats,
   getCurrentUser,
+  getUsers,
   updateUser,
 } from '../controllers/userController.js';
 import { validateUserUpdate } from '../middleware/validationMiddleware.js';
@@ -20,5 +21,6 @@ router.put(
 
   updateUser
 );
+router.get('/all', getUsers);
 
 export default router;
