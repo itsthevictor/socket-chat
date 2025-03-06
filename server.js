@@ -8,7 +8,7 @@ import { connectDB } from './db/connectDb.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
-const app = express();
+import { app, server, io } from './config/socket.js';
 dotenv.config();
 
 import cloudinary from 'cloudinary';
@@ -61,13 +61,21 @@ const PORT = process.env.PORT || 8080;
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`server is listening on port ${PORT}...`);
     });
   } catch (error) {
     console.log(error);
   }
 };
+
+io.on('connection', (socket) => {
+  console.log('a user connected', socket.id);
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected', socket.id);
+  });
+});
 
 // spin-up server
 start();
