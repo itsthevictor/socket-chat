@@ -4,26 +4,32 @@ import {
   redirect,
   useNavigate,
   useActionData,
-} from "react-router-dom";
+} from 'react-router-dom';
 
-import customFetch from "../utils/customFetch";
-import AuthImagePattern from "../components/AuthImagePattern";
-import { MessageSquare, Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
-import { SubmitBtn } from "../components";
-
+import customFetch from '../utils/customFetch';
+import AuthImagePattern from '../components/AuthImagePattern';
+import { MessageSquare, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { useState } from 'react';
+import { SubmitBtn } from '../components';
+import { io } from 'socket.io-client';
+const BASE_URL = 'http://localhost:8080';
 export const action = async ({ request }) => {
+  const connectSocket = () => {
+    const socket = io(BASE_URL);
+    socket.connect();
+  };
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  const errors = { msg: "" };
+  const errors = { msg: '' };
   if (data.password.length < 3) {
-    errors.msg = "password too short";
+    errors.msg = 'password too short';
     return errors;
   }
   try {
-    const response = await customFetch.post("/auth/login", data);
-    console.log("login", response.status);
-    return redirect("/chat");
+    const response = await customFetch.post('/auth/login', data);
+    console.log('login', response.status);
+    connectSocket();
+    return redirect('/chat');
   } catch (error) {
     console.log(error);
     return error;
@@ -36,79 +42,79 @@ const Login = () => {
   const errors = useActionData();
   const loginDemoUser = async () => {
     const data = {
-      email: "test@test.com",
-      password: "secret123",
+      email: 'test@test.com',
+      password: 'secret123',
     };
     try {
-      await customFetch.post("/auth/login", data);
+      await customFetch.post('/auth/login', data);
 
-      navigate("/chat");
+      navigate('/chat');
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="h-screen grid lg:grid-cols-2">
+    <div className='h-screen grid lg:grid-cols-2'>
       {/* Left Side - Form */}
-      <div className="flex flex-col justify-center items-center p-6 sm:p-12">
-        <div className="w-full max-w-md space-y-8">
+      <div className='flex flex-col justify-center items-center p-6 sm:p-12'>
+        <div className='w-full max-w-md space-y-8'>
           {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="flex flex-col items-center gap-2 group">
+          <div className='text-center mb-8'>
+            <div className='flex flex-col items-center gap-2 group'>
               <div
-                className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20
-              transition-colors"
+                className='w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20
+              transition-colors'
               >
-                <MessageSquare className="w-6 h-6 text-primary" />
+                <MessageSquare className='w-6 h-6 text-primary' />
               </div>
-              <h1 className="text-2xl font-bold mt-2">Welcome Back</h1>
-              <p className="text-base-content/60">Sign in to your account</p>
+              <h1 className='text-2xl font-bold mt-2'>Welcome Back</h1>
+              <p className='text-base-content/60'>Sign in to your account</p>
             </div>
           </div>
 
           {/* Form */}
-          <Form method="post" className="space-y-6">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Email</span>
+          <Form method='post' className='space-y-6'>
+            <div className='form-control'>
+              <label className='label'>
+                <span className='label-text font-medium'>Email</span>
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-base-content/40" />
+              <div className='relative'>
+                <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                  <Mail className='h-5 w-5 text-base-content/40' />
                 </div>
                 <input
-                  type="email"
-                  name="email"
+                  type='email'
+                  name='email'
                   className={`input input-bordered w-full pl-10`}
-                  placeholder="you@example.com"
+                  placeholder='you@example.com'
                 />
               </div>
             </div>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Password</span>
+            <div className='form-control'>
+              <label className='label'>
+                <span className='label-text font-medium'>Password</span>
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-base-content/40" />
+              <div className='relative'>
+                <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                  <Lock className='h-5 w-5 text-base-content/40' />
                 </div>
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   className={`input input-bordered w-full pl-10`}
-                  placeholder="••••••••"
-                  name="password"
+                  placeholder='••••••••'
+                  name='password'
                 />
                 <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  type='button'
+                  className='absolute inset-y-0 right-0 pr-3 flex items-center'
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-base-content/40" />
+                    <EyeOff className='h-5 w-5 text-base-content/40' />
                   ) : (
-                    <Eye className="h-5 w-5 text-base-content/40" />
+                    <Eye className='h-5 w-5 text-base-content/40' />
                   )}
                 </button>
               </div>
@@ -117,10 +123,10 @@ const Login = () => {
             <SubmitBtn />
           </Form>
 
-          <div className="text-center">
-            <p className="text-base-content/60">
-              Don&apos;t have an account?{" "}
-              <Link to="/register" className="link link-primary">
+          <div className='text-center'>
+            <p className='text-base-content/60'>
+              Don&apos;t have an account?{' '}
+              <Link to='/register' className='link link-primary'>
                 Create account
               </Link>
             </p>
@@ -130,9 +136,9 @@ const Login = () => {
 
       {/* Right Side - Image/Pattern */}
       <AuthImagePattern
-        title={"Welcome back!"}
+        title={'Welcome back!'}
         subtitle={
-          "Sign in to continue your conversations and catch up with your messages."
+          'Sign in to continue your conversations and catch up with your messages.'
         }
       />
     </div>

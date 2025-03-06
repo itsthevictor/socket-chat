@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import mainFetch from '../utils/customFetch';
 import { Navigate, redirect } from 'react-router-dom';
+import { io } from 'socket.io-client';
+const BASE_URL = 'http://localhost:8080';
 export const useAuth = create((set) => ({
   user: null,
   isCheckingAuth: true,
@@ -38,4 +40,10 @@ export const useAuth = create((set) => ({
   },
   isUpdatingProfile: false,
   onlineUsers: [],
+
+  connectSocket: () => {
+    const socket = io(BASE_URL);
+    socket.connect();
+  },
+  disconnectSocket: () => {},
 }));
