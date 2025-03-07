@@ -4,7 +4,7 @@ import 'express-async-errors';
 import * as dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import { connectDB } from './db/connectDb.js';
-
+import cors from 'cors';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -27,6 +27,13 @@ import { authenticateUser } from './middleware/authMiddleware.js';
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+// app.use(
+//   cors({
+//     origin: 'http://localhost:5173',
+//     credentials: true,
+//   })
+// );
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,

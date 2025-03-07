@@ -12,12 +12,10 @@ import { MessageSquare, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { SubmitBtn } from '../components';
 import { io } from 'socket.io-client';
+import { useAuth } from '../hooks/useAuth';
 const BASE_URL = 'http://localhost:8080';
+
 export const action = async ({ request }) => {
-  const connectSocket = () => {
-    const socket = io(BASE_URL);
-    socket.connect();
-  };
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   const errors = { msg: '' };
@@ -28,7 +26,7 @@ export const action = async ({ request }) => {
   try {
     const response = await customFetch.post('/auth/login', data);
     console.log('login', response.status);
-    connectSocket();
+
     return redirect('/chat');
   } catch (error) {
     console.log(error);
@@ -37,21 +35,17 @@ export const action = async ({ request }) => {
 };
 
 const Login = () => {
+  const { signIn } = useAuth();
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-  const errors = useActionData();
-  const loginDemoUser = async () => {
-    const data = {
-      email: 'test@test.com',
-      password: 'secret123',
-    };
-    try {
-      await customFetch.post('/auth/login', data);
 
-      navigate('/chat');
-    } catch (error) {
-      console.log(error);
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('signing in handler');
+
+    const data = { email: email, password: password };
+    signIn(data);
   };
 
   return (
@@ -74,7 +68,7 @@ const Login = () => {
           </div>
 
           {/* Form */}
-          <Form method='post' className='space-y-6'>
+          <form onSubmit={handleSubmit} className='space-y-6'>
             <div className='form-control'>
               <label className='label'>
                 <span className='label-text font-medium'>Email</span>
@@ -88,6 +82,7 @@ const Login = () => {
                   name='email'
                   className={`input input-bordered w-full pl-10`}
                   placeholder='you@example.com'
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -105,6 +100,7 @@ const Login = () => {
                   className={`input input-bordered w-full pl-10`}
                   placeholder='••••••••'
                   name='password'
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <button
                   type='button'
@@ -121,7 +117,7 @@ const Login = () => {
             </div>
 
             <SubmitBtn />
-          </Form>
+          </form>
 
           <div className='text-center'>
             <p className='text-base-content/60'>
