@@ -40,11 +40,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <ProtectedRoute>
-            <Landing />
-          </ProtectedRoute>
-        ),
+        element: <Landing />,
       },
       {
         path: '/register',

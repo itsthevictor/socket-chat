@@ -9,12 +9,15 @@ export const useAuth = create((set, get) => ({
   isSigningUp: false,
   isLoggingIn: false,
   isUpdatingProfile: false,
+  socket: null,
+  isUpdatingProfile: false,
+  onlineUsers: [],
 
   signIn: async (data) => {
     console.log('sign in started');
     try {
-      mainFetch.post('/auth/login', data);
-      Navigate('/chat');
+      await mainFetch.post('/auth/login', data);
+      get().connectSocket();
     } catch (error) {
       console.log(error);
     }
@@ -22,8 +25,9 @@ export const useAuth = create((set, get) => ({
   checkAuth: async () => {
     try {
       const response = await mainFetch.get('/users');
-
       set({ user: response.data.user });
+      const { user } = get();
+      console.log('signed in user', user);
       get().connectSocket();
     } catch (error) {
       console.log('fetch current user error in hook', error);
@@ -34,7 +38,7 @@ export const useAuth = create((set, get) => ({
   },
   logout: async () => {
     try {
-      const response = await mainFetch.get('/auth/logout');
+      await mainFetch.get('/auth/logout');
       get().disconnectSocket();
       set({ user: null });
       Navigate('/login');
@@ -51,16 +55,24 @@ export const useAuth = create((set, get) => ({
       console.log('error');
     }
   },
-  isUpdatingProfile: false,
-  onlineUsers: [],
 
   connectSocket: () => {
-    const socket = io(BASE_URL);
     const { user } = get();
-    console.log('connect socket user', user);
-
     if (!user) return;
+
+    const socket = io(BASE_URL, {
+      query: {
+        userId: user._id,
+      },
+    });
+
     socket.connect();
+    set({ socket: socket });
+    socket.on('getOnlineUsers', (userIds) => {
+      set({ onlineUsers: userIds });
+    });
   },
-  disconnectSocket: () => {},
+  disconnectSocket: () => {
+    if (get().socket?.connected) get().socket.disconnect();
+  },
 }));

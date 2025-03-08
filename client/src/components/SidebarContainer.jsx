@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 const SidebarContainer = () => {
   const { onlineUsers, users, selectedUser, setSelectedUser } = useChat();
-  console.log('users', users);
 
   // Create 8 skeleton items
   const skeletonContacts = Array(8).fill(null);
