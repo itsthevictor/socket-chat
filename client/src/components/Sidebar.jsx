@@ -9,6 +9,8 @@ const Sidebar = () => {
 
   const { onlineUsers } = useAuth();
 
+  console.log('online users', onlineUsers);
+
   useEffect(() => {
     getUsers();
   }, [getUsers]);

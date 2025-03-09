@@ -27,7 +27,7 @@ export const useAuth = create((set, get) => ({
       const response = await mainFetch.get('/users');
       set({ user: response.data.user });
       const { user } = get();
-      console.log('signed in user', user);
+
       get().connectSocket();
     } catch (error) {
       console.log('fetch current user error in hook', error);

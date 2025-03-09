@@ -1,9 +1,11 @@
 import { Users } from 'lucide-react';
 import { useChat } from '../hooks/useChat';
 import { useState } from 'react';
+import { useAuth } from '../hooks/useAuth';
 
 const SidebarContainer = () => {
-  const { onlineUsers, users, selectedUser, setSelectedUser } = useChat();
+  const { users, selectedUser, setSelectedUser } = useChat();
+  const { onlineUsers, user } = useAuth();
 
   // Create 8 skeleton items
   const skeletonContacts = Array(8).fill(null);
@@ -30,22 +32,24 @@ const SidebarContainer = () => {
             />
             <span className='text-sm'>Show online only</span>
           </label>
-          {/* <span className='text-xs text-zinc-500'>
-            ({onlineUsers.length - 1} online)
-          </span> */}
+          {onlineUsers && (
+            <span className='text-xs text-zinc-500'>
+              ({onlineUsers.length - 1} online)
+            </span>
+          )}
         </div>
       </div>
 
       <div className='overflow-y-auto w-full py-3'>
-        {users.map((user) => (
+        {users.map((item, i) => (
           <button
-            key={user._id}
-            onClick={() => setSelectedUser(user)}
+            key={i}
+            onClick={() => setSelectedUser(item)}
             className={`
               w-full p-3 flex items-center gap-3
               hover:bg-base-300 transition-colors
               ${
-                selectedUser?._id === user._id
+                selectedUser?._id === item._id
                   ? 'bg-base-300 ring-1 ring-base-300'
                   : ''
               }
@@ -53,30 +57,30 @@ const SidebarContainer = () => {
           >
             <div className='relative mx-auto lg:mx-0'>
               <img
-                src={user.avatar || '/avatar.png'}
-                alt={user.firstName}
+                src={item.avatar || '/avatar.png'}
+                alt={item.firstName}
                 className='size-12 object-cover rounded-full'
               />
-              {/* {onlineUsers.includes(user._id) && (
+              {onlineUsers?.includes(item._id) && (
                 <span
                   className='absolute bottom-0 right-0 size-3 bg-green-500 
                   rounded-full ring-2 ring-zinc-900'
                 />
-              )} */}
+              )}
             </div>
 
             <div className='hidden lg:block text-left min-w-0'>
               <div className='font-medium truncate capitalize'>
-                {user.lastName}
+                {item.firstName}
               </div>
-              {/* <div className='text-sm text-zinc-400'>
-                {onlineUsers.includes(user._id) ? 'Online' : 'Offline'}
-              </div> */}
+              <div className='text-sm text-zinc-400'>
+                {onlineUsers?.includes(item._id) ? 'Online' : 'Offline'}
+              </div>
             </div>
           </button>
         ))}
 
-        {/* {filteredUsers.length === 0 && (
+        {/* {filteredUsers?.length === 0 && (
           <div className='text-center text-zinc-500 py-4'>No online users</div>
         )} */}
       </div>

@@ -1,16 +1,13 @@
-import Wrapper from "../assets/wrappers/LandingPage";
-import main from "../assets/images/main.svg";
-import { Link } from "react-router-dom";
-import { Logo } from "../components";
+import Wrapper from '../assets/wrappers/LandingPage';
+import main from '../assets/images/main.svg';
+import { Link } from 'react-router-dom';
+import { Logo } from '../components';
 
 const Landing = () => {
   return (
     <>
-      <nav>
-        <h1 className="text-red-500">Birth of the cool</h1>
-      </nav>
-      <div className="container page">
-        <div className="info">
+      <div className='container page h-screen w-full pt-20 pl-20'>
+        <div className='info'>
           <h1>
             Oh, God. Not another <br />
             <span>Chat App</span> with &#8249;Socket.io&#8250;
@@ -22,12 +19,15 @@ const Landing = () => {
             artisan hoodie. Tbh everyday carry listicle hot chicken, kogi
             aesthetic prism raclette snackwave ethical iPhone.
           </p>
-          <Link to="/register" className="btn btn-primary">
-            register
-          </Link>
-          <Link to="/login" className="btn btn-primary">
-            login
-          </Link>
+          <div className='flex flex-1 w-full flex-start gap-4 pt-4'>
+            {' '}
+            <Link to='/register' className='btn btn-primary  w-1/6'>
+              register
+            </Link>
+            <Link to='/login' className='btn btn-primary w-1/6'>
+              login
+            </Link>
+          </div>
         </div>
         {/* <img src={main} alt="job hunt" className="img main-img" /> */}
       </div>

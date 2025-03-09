@@ -6,9 +6,7 @@ import { useAuth } from '../hooks/useAuth';
 import { formatMessageTime } from '../utils/utils';
 const ChatContainer = () => {
   const { messages, getMessages, messagesLoading, selectedUser } = useChat();
-  const { user, onlineUsers } = useAuth();
-  console.log('online users', onlineUsers);
-
+  const { user } = useAuth();
   useEffect(() => {
     getMessages(selectedUser._id);
   }, [selectedUser._id]);
