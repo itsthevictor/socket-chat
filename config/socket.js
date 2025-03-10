@@ -32,3 +32,7 @@ io.on('connection', (socket) => {
 
 // keep track of online users {userId:socketId}
 export const userSocketMap = {};
+
+export const getReceiverSocketId = (userId) => {
+  return userSocketMap[userId];
+};

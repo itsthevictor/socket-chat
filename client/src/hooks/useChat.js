@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import mainFetch from '../utils/customFetch';
+import { useAuth } from './useAuth';
 
 export const useChat = create((set, get) => ({
   messages: [],
@@ -21,7 +22,6 @@ export const useChat = create((set, get) => ({
   },
 
   getMessages: async (userId) => {
-    console.log('sending message');
     set({ messagesLoading: true });
     try {
       const response = await mainFetch.get(`/messages/${userId}`);
@@ -46,5 +46,20 @@ export const useChat = create((set, get) => ({
     } catch (error) {
       console.log(error);
     }
+  },
+
+  listenToMessages: () => {
+    const { selectedUser } = get();
+    if (!selectedUser) return;
+    const socket = useAuth.getState().socket;
+
+    socket.on('newMessage', (newMessage) => {
+      set({ messages: [...get().messages, newMessage] });
+    });
+  },
+
+  stopListeningToMessages: () => {
+    const socket = useAuth.getState().socket;
+    socket.off('newMessage');
   },
 }));

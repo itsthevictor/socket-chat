@@ -1,15 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useChat } from '../hooks/useChat';
 import { ChatHeader, MessageInput, MessagesLoading } from '../components';
 import { LogIn } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { formatMessageTime } from '../utils/utils';
 const ChatContainer = () => {
-  const { messages, getMessages, messagesLoading, selectedUser } = useChat();
+  const {
+    messages,
+    getMessages,
+    messagesLoading,
+    selectedUser,
+    listenToMessages,
+    stopListeningToMessages,
+  } = useChat();
+
   const { user } = useAuth();
+
+  const messageRef = useRef(null);
   useEffect(() => {
     getMessages(selectedUser._id);
+    listenToMessages();
+
+    return () => stopListeningToMessages();
   }, [selectedUser._id]);
+
+  useEffect(() => {
+    if (messageRef.current && messages)
+      messageRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   return messagesLoading ? (
     <div className='flex flex-1 felx-col overflow-auto'>
       {' '}
@@ -27,6 +46,7 @@ const ChatContainer = () => {
             className={`chat ${
               item.senderId === selectedUser._id ? 'chat-start' : 'chat-end'
             }`}
+            ref={messageRef}
           >
             <div className='chat-image avatar'>
               <div className='size-10 rounded-full border'>
